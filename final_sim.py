@@ -13,7 +13,7 @@ def get_intervals():
     
     intervals = []
     start = 0.0
-    interval = 0.005
+    interval = 0.01     #increase value to increase speed of animation
     while start<2*T:
         intervals.append(start)
         start+=interval
@@ -28,7 +28,7 @@ def update_position(i, circle, intervals_actual, T, u, theta):
         x = u*np.cos(theta)*t - 100
         y = u*np.sin(theta)*t - 0.5*g*(t**2)
     else:
-        x = u*np.cos(theta)*(t-T) - 100
+        x = -u*np.cos(theta)*(t-T) + 100
         y = 0
     circle.center = (x,y)
     return circle,
@@ -64,8 +64,8 @@ for i in intervals:
     if not i<=T:
         first, second = np.split(intervals, [intervals.index(i)])
         break
-intervals_inv = second[::-4]  # 4 taken to make supporting phase 4x faster than swinging phase
-intervals_actual = list(first) + list(intervals_inv)
+intervals_standing = second[::4]     # 4 taken to make supporting phase 4x faster than swinging phase
+intervals_actual = list(first) + list(intervals_standing)
 
 ########
 
